@@ -1,0 +1,14 @@
+<div class="layout">
+    <div *ngIf="isEmpty()">
+        <h2>No todo items</h2>
+    </div>
+    <div *ngIf="!isEmpty()">     
+        <div *ngFor="let item of todoItems;">
+            <div *ngIf = "isPresent(item)" class="todoItem">
+                {{item.name}}
+                <button (click)="onSelect(item)" class="viewbutton">View</button>
+            </div>
+        </div>
+    </div>
+    <button type="button" class="button" (click)="goToAddPage()">Add Todo Item</button>
+</div>

@@ -1,0 +1,70 @@
+@mixin transition {
+    color: whitesmoke;
+    border: none;
+    border-radius: 4px;
+    transition-duration: 0.5s;
+}
+@mixin effect{
+    background-color: rgb(3, 107, 148);
+    color: whitesmoke
+}
+.item{ 
+    input.ng-invalid, textarea.ng-invalid{
+        border-left: 5px solid red;
+    }
+    input.ng-valid, textarea.ng-valid{
+        border-left: 5px solid green;
+    }
+    .alert{
+        padding: 8px 8px;
+        border: 1px solid rgb(238, 209, 209);
+        border-radius: 2px;
+        background-color: rgb(238, 209, 209);
+        color: rgb(175, 9, 9);
+        float: left;
+        clear: left;
+        margin: -20px 0px 20px 20px;
+    }
+    .todo-description::placeholder{
+        position: absolute;
+        text-align: left;
+        font-size: 20px;
+        color: rgb(119, 99, 138);
+    }
+    .todo-description{
+        font-size: 20px;
+        border-style:solid;
+        border-width: 2px;
+        border-color: rgb(113, 91, 173);
+        padding: 5px 5px;
+    }
+    .todo-time{
+        padding: 8px 8px;
+        @include transition();
+        background-color: #008CBA;
+    }
+    .todo-time:hover{
+        @include effect();
+        cursor: pointer;
+    }
+    .todo-description, .todo-time, .button, .deleteButton{
+        float: left;
+        margin: 20px 0px 20px 20px;
+    }
+    .todo-description, .todo-time, .button{
+        clear: left;
+    }
+    .button, .deleteButton{
+        padding: 10px 10px;
+        @include transition();
+        background-color: #296402;
+    }
+    button[disabled]{
+        border: 1px solid #999999;
+        background-color: #cccccc;
+        color: #666666;
+    }
+    .button:hover{
+        cursor: pointer;
+    }
+}
