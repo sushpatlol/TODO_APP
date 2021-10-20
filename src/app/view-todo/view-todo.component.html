@@ -1,21 +1,29 @@
-<div class="item">
-    <form [formGroup]="userForm" (ngSubmit)="updateTodoItem()">
-        <input type="text" placeholder="Name" class="todo-description" formControlName="todoName">
-        <div  *ngIf="userForm.controls['todoName'].hasError('required') && userForm.controls.todoName.dirty" class="alert">
-            Please enter the name for the todo item
-        </div>
-        <div *ngIf="userForm.controls['todoName'].hasError('minlength')" class="alert">
-            Please enter the name of more than 4 characters
-        </div>
-        <div *ngIf="userForm.controls['todoName'].hasError('maxlength')" class="alert">
-            Please enter the name of less than 15 character
-        </div>
-        <textarea placeholder="Description" class="todo-description" rows="8" cols="50" formControlName="todoDescription"></textarea>
-        <div  *ngIf="userForm.controls['todoDescription'].hasError('required') && userForm.controls.todoDescription.dirty" class="alert">
-            Please enter the description
-        </div>
-        <input type="datetime-local" class="todo-time" formControlName="todoTime">
-        <button type="submit" [disabled]="!(userForm.valid && isFormChanged())" class="button">Update item</button>
-        <button type="button" class="deleteButton" (click)="deleteTodoItem()">Delete item</button>
-    </form>
+<div *ngIf="todoItem!=null">
+    <div class="item">
+        <form [formGroup]="userForm" (ngSubmit)="updateTodoItem()">
+            <input type="text" placeholder="Name" class="todo-description" formControlName="todoName">
+            <div  *ngIf="userForm.controls['todoName'].hasError('required') && userForm.controls.todoName.dirty" class="alert">
+                Please enter the name for the todo item
+            </div>
+            <div *ngIf="userForm.controls['todoName'].hasError('minlength')" class="alert">
+                Please enter the name of more than 4 characters
+            </div>
+            <div *ngIf="userForm.controls['todoName'].hasError('maxlength')" class="alert">
+                Please enter the name of less than 15 character
+            </div>
+            <textarea placeholder="Description" class="todo-description" rows="8" cols="50" formControlName="todoDescription"></textarea>
+            <div  *ngIf="userForm.controls['todoDescription'].hasError('required') && userForm.controls.todoDescription.dirty" class="alert">
+                Please enter the description
+            </div>
+            <input type="datetime-local" class="todo-time" formControlName="todoTime">
+            <button type="submit" [disabled]="!(userForm.valid && isFormChanged())" class="button">Update item</button>
+            <button type="button" class="deleteButton" (click)="deleteTodoItem()">Delete item</button>
+        </form>
+    </div>
 </div>
+<div *ngIf="todoItem==undefined">
+    <h2>
+        Page Not Found
+    </h2>
+</div>
+

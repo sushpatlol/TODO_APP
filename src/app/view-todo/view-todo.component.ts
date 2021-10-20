@@ -15,6 +15,7 @@ export class ViewTodoComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute, private _formBuilder: FormBuilder,private _todoService: TodoService) { }
 
   ngOnInit(): void {
+    console.log(this.todoItem);
     this.route.paramMap.subscribe((params: ParamMap) => {
       let id = params.get('id');
       if(id!=null){
