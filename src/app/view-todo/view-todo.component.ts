@@ -25,9 +25,10 @@ export class ViewTodoComponent implements OnInit {
       }
     });
     this.userForm = this._formBuilder.group({
-      todoName: [this.todoItem.name,[Validators.required, Validators.minLength(4), Validators.maxLength(15)]],
-      todoDescription: [this.todoItem.description,[Validators.required]],
-      todoTime: [this.todoItem.time]
+      
+      todoName: [this.todoItem?.name,[Validators.required, Validators.minLength(4), Validators.maxLength(15)]],
+      todoDescription: [this.todoItem?.description,[Validators.required]],
+      todoTime: [this.todoItem?.time]
     });
   }
   updateTodoItem(){

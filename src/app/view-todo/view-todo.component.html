@@ -21,9 +21,8 @@
         </form>
     </div>
 </div>
-<div *ngIf="todoItem==undefined">
-    <h2>
-        Page Not Found
-    </h2>
+<div *ngIf="!todoItem">
+    <app-page-not-found>
+    </app-page-not-found>
 </div>
 
