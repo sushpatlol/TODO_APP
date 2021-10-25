@@ -23,6 +23,7 @@
         </form>
     </div>
 </div>
+
 <div *ngIf="isDeleted">
     <app-popup (childEvent)="navigateTolist()" [text]="deleted"></app-popup>
 </div>

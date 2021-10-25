@@ -28,7 +28,7 @@ export class ViewTodoComponent implements OnInit {
         this.todoItem = this._todoService.getTodoItem(this.todoItemId);
       }
     });
-    this.userForm = this._formBuilder.group({
+    this.userForm = this._formBuilder.group({   
       todoName: [this.todoItem?.name,[Validators.required, Validators.minLength(4), Validators.maxLength(15)]],
       todoDescription: [this.todoItem?.description,[Validators.required]],
       todoTime: [this.todoItem?.time]
