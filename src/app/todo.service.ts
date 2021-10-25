@@ -91,17 +91,17 @@ export class TodoService {
     return true;
   }
 
-  validUser(usercred: UserCred):boolean{
-    if(!this.userCreds.has(usercred.userid) || this.userCreds.get(usercred.userid)?.userpwd !== usercred.userpwd){
-      
-      return false;
+  validUser(usercred: UserCred):number{
+    if(!this.userCreds.has(usercred.userid))
+    return 0;
+    if(this.userCreds.get(usercred.userid)?.userpwd !== usercred.userpwd){
+      return 1;
     }
-    
     this.loggedIn = true;
     this.userId = usercred.userid;
     this.loadTodoItems();
     
-    return true;
+    return 2;
   }
 
   logout():void{

@@ -29,3 +29,10 @@
         </div>
     </form>
 </div>
+
+<div *ngIf="wrongPwd">
+    <app-popup (childEvent)="togglePwd()" [text]="wrongPassword"></app-popup>
+</div>
+<div *ngIf="wrongUsr">
+    <app-popup (childEvent)="toggleUsr()" [text]="wrongUser"></app-popup>
+</div>
