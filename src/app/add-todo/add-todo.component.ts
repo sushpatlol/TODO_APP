@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TodoItem, TodoService } from '../todo.service';
 
@@ -10,6 +10,8 @@ import { TodoItem, TodoService } from '../todo.service';
 })
 export class AddTodoComponent implements OnInit {
   public userForm!: FormGroup;
+  public isAdded = false;
+  public added = "Todo Item Added!!";
   constructor(private router: Router, private route: ActivatedRoute, private _formBuilder: FormBuilder,private _todoService: TodoService) { }
 
   ngOnInit(): void {
@@ -19,9 +21,20 @@ export class AddTodoComponent implements OnInit {
       todoTime: [null, [Validators.required]]
     })
   }
+  isLoggedIn(){
+    if(this._todoService.loggedIn)
+    return true;
+    this.router.navigate(["../login"],{relativeTo: this.route});
+    return false;
+  }
   onSubmit(){
     let todoitem = new TodoItem(this.userForm.value.todoName, this.userForm.value.todoDescription, this.userForm.value.todoTime);
     this._todoService.addTodoItem(todoitem);
+    this.isAdded = true;
+    
+  }
+  navigateTolist(){
+    this.isAdded = false;
     this.router.navigate(["../"],{relativeTo: this.route});
   }
 }

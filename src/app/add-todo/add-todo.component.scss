@@ -67,4 +67,18 @@
     .button:hover{
         cursor: pointer;
     }
+    .flexLayout{
+        display: flex;
+        flex-wrap: wrap;
+        .alert{
+            flex: 50%;
+            margin: 20px;
+        }
+        .textarea{
+            flex: 80%;
+        }
+        .todo-time{
+            flex: 30%;
+        }
+    }
 }

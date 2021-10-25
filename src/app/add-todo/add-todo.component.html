@@ -1,6 +1,6 @@
-<div class="item">
+<div class="item" *ngIf="isLoggedIn()">
     <form [formGroup]="userForm" (ngSubmit)="onSubmit()" novalidate>
-        
+        <div class="flexLayout">
         <input type="text" placeholder="Name" class="todo-description" formControlName="todoName" #refName>
         <div  *ngIf="userForm.controls['todoName'].hasError('required') && userForm.controls.todoName.dirty" class="alert">
             Please enter the name for the todo item
@@ -20,5 +20,9 @@
             Please select the date and time
         </div>
         <button [disabled]="!userForm.valid" type="submit" class="button">Add item</button>
+        </div>
     </form>
+</div>
+<div *ngIf="isAdded">
+    <app-popup (childEvent)="navigateTolist()" [text]="added"></app-popup>
 </div>
