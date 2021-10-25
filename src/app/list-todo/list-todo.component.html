@@ -1,12 +1,19 @@
-<div class="layout">
+<div class="layout" *ngIf="isLoggedIn()t">
+<div>
     <div *ngIf="isEmpty()">
         <h2>No todo items</h2>
     </div>
+    <div>
+        <button type="button" class="logoutButton" (click)="logout()">Log out</button>
+    </div>
+</div>
     <div *ngIf="!isEmpty()">     
-        <div *ngFor="let item of todoItems;">
-            <div *ngIf = "isPresent(item)" class="todoItem">
-                {{item.name}}
-                <button (click)="onSelect(item)" class="viewbutton">View</button>
+        <div *ngFor="let item of todoItems;" class="todoLayout" fxLayout="column">
+            <div *ngIf = "isPresent(item)"  fxLayout="row">
+                <div class="todoItem" fxFlex="20">
+                    {{item.name}}
+                    <button (click)="onSelect(item)" class="viewbutton">View</button>
+                </div>
             </div>
         </div>
     </div>

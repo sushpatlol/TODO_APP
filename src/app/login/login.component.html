@@ -1,0 +1,31 @@
+<div >
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="formLayout">
+            <div class="formDiv">
+                <div class="formLabel">
+                    <label>Username:</label>
+                </div>
+            
+                    <input type="text" formControlName="userid" class="formInput" >
+                
+                
+                <div *ngIf="loginForm.controls['userid'].hasError('required') && loginForm.controls.userid.dirty" class="alert">
+                    Please enter the userid
+                </div>
+            </div>
+            <div class="formDiv">
+                <div class="formLabel">
+                    <label>Password:</label>
+                </div>
+                
+                    <input type="password" formControlName="userpwd" class="formInput">
+             
+                <div *ngIf="loginForm.controls['userpwd'].hasError('required') && loginForm.controls.userpwd.dirty" class="alert">
+                    Please enter the user password
+                </div>
+            </div>
+            <button type="submit" class="button" [disabled]="!loginForm.valid">Login</button>
+            <button type="button" class="button" (click)="signUp()">Sign Up</button>
+        </div>
+    </form>
+</div>

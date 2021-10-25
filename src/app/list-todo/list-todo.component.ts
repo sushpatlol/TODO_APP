@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+
 import { ActivatedRoute, Router } from '@angular/router';
+
 import { TodoItem, TodoService } from '../todo.service';
 
 @Component({
@@ -9,10 +11,12 @@ import { TodoItem, TodoService } from '../todo.service';
 })
 export class ListTodoComponent implements OnInit {
   public todoItems : TodoItem[] = [];
+
   constructor(private router: Router, private route: ActivatedRoute, private _todoService: TodoService) { }
 
   ngOnInit(): void {
     this.todoItems = this._todoService.getTodoItems();
+    
   }
   onSelect(item: TodoItem){
     console.log("clicked on ", item.indx);
@@ -33,5 +37,14 @@ export class ListTodoComponent implements OnInit {
       }
     }
     return res;
+  }
+  isLoggedIn(){
+    if(this._todoService.loggedIn)
+    return true;
+    this.router.navigate(["./login"],{relativeTo: this.route});
+    return false;
+  }
+  logout(){
+    this._todoService.logout();
   }
 }

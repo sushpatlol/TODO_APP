@@ -12,15 +12,19 @@ export class ViewTodoComponent implements OnInit {
   public todoItemId! : number;
   public todoItem!: TodoItem;
   public userForm!: FormGroup;
+  public isDeleted = false;
+  public isUpdated = false;
+  public updated = "Todo Item Updated!!";
+  public deleted = "Todo Item Deleted!!";
   constructor(private router: Router, private route: ActivatedRoute, private _formBuilder: FormBuilder,private _todoService: TodoService) { }
 
   ngOnInit(): void {
-    console.log(this.todoItem);
+   
     this.route.paramMap.subscribe((params: ParamMap) => {
       let id = params.get('id');
       if(id!=null){
         this.todoItemId = parseInt(id);
-        console.log(this.todoItemId);
+        
         this.todoItem = this._todoService.getTodoItem(this.todoItemId);
       }
     });
@@ -34,10 +38,14 @@ export class ViewTodoComponent implements OnInit {
     let updatedTodoItem = new TodoItem(this.userForm.value.todoName, this.userForm.value.todoDescription, this.userForm.value.todoTime);
     updatedTodoItem.indx = this.todoItem.indx;
     this._todoService.updateTodoItem(updatedTodoItem);
-    this.router.navigate(["../"],{relativeTo: this.route});
+    this.isUpdated = true;
   }
   deleteTodoItem(){
     this._todoService.deleteTodoItem(this.todoItemId);
+    this.isDeleted = true;
+  }
+  navigateTolist(){
+    this.isDeleted = false;this.isUpdated = false;
     this.router.navigate(["../"],{relativeTo: this.route});
   }
   isFormChanged(){

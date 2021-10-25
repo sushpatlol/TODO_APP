@@ -1,0 +1,45 @@
+<div *ngIf="!signInSuccess">
+    <form [formGroup]= "userForm" (ngSubmit)="onSubmit()">
+       
+        <div class="formLayout">
+            <div class="formDiv">
+                <div class="formLabel">
+                    <label >Name</label>
+                </div>
+                
+                <input type="text" formControlName="username" class="formInput">
+                <div *ngIf="userForm.controls['username'].hasError('required') && userForm.controls.username.dirty" class="alert">
+                    Please enter the name
+                </div>
+            </div>
+            <div class="formDiv">
+                <div class="formLabel">
+                    <label >Username</label>
+                </div>
+                
+                <input type="text" formControlName="userid" class="formInput">
+                <div *ngIf="userForm.controls['userid'].hasError('required') && userForm.controls.userid.dirty" class="alert">
+                    Please enter the userid
+                </div>
+            </div>
+            <div class="formDiv">
+                <div class="formLabel">
+                    <label >Password</label>
+                </div>
+                <input type="password" formControlName="userpwd" class="formInput">
+                <div *ngIf="userForm.controls['userpwd'].hasError('required') && userForm.controls.userpwd.dirty" class="alert">
+                    Please set the password
+                </div>
+            </div>
+            <button type="submit" class="button" [disabled]="!userForm.valid">Sign up</button>
+        </div>
+    </form>
+</div>
+<div *ngIf="userExists">
+    <app-popup (childEvent)="navigateToLogin()" [text]="userexist"></app-popup>
+</div>
+
+<div *ngIf="signInSuccess">
+    <app-popup (childEvent)="navigateToLogin()" [text]="signUpSuccess"></app-popup>
+</div>
+

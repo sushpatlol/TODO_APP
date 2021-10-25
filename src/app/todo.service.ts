@@ -1,16 +1,59 @@
+
 import { Injectable } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class TodoService {
+
+  userId!: string;
+  loggedIn:boolean = false;
+  
+  userCreds: Map<string, UserCred> = new Map();
+
+  mapItemsToUser: Map<string, TodoItem[]> = new Map();
   todoItems: TodoItem[] = [];
-  constructor() { }
+  constructor(private router:Router, private route: ActivatedRoute) { 
+  
+    let users = localStorage.getItem("users");
+    if(users){ 
+      let parsedUsers = JSON.parse(users);
+      for(let i=0;i<parsedUsers.length;i++){
+        this.userCreds.set(parsedUsers[i][0], new UserCred(parsedUsers[i][1].username, parsedUsers[i][1].userid, parsedUsers[i][1].userpwd));
+      }
+    }
+  }
+
+  /*
+  Methods related to loading data from localstorage
+  */
+  loadTodoItems(){
+    this.todoItems = [];
+    let todos = localStorage.getItem("todos");
+    if(todos){
+      let todoitemsparsed = JSON.parse(todos);
+      for(let i=0;i<todoitemsparsed.length;i++){
+        if(todoitemsparsed[i][0] === this.userId){
+          for(let j=0;j<todoitemsparsed[i][1].length;j++){
+            let t = new TodoItem(todoitemsparsed[i][1][j].name, todoitemsparsed[i][1][j].description, todoitemsparsed[i][1][j].time);
+            t.indx = todoitemsparsed[i][1][j].indx;
+            this.todoItems.push(t);
+          }
+        }
+      }
+    }
+  }
+  /*
+  Methods related to todo item
+  .................................... 
+  */
 
   addTodoItem(todoItem: TodoItem){
-    todoItem.indx = this.todoItems.length;
-    this.todoItems.push(todoItem);
-    console.log("adding "+this.todoItems);
+    todoItem.indx = this.todoItems.length==0?0:this.todoItems[this.todoItems.length-1].indx+1;
+    this.todoItems?.push(todoItem);
+    
   }
   getTodoItems(){
     return this.todoItems;
@@ -22,7 +65,68 @@ export class TodoService {
     this.todoItems[item.indx] = item;
   }
   deleteTodoItem(id: number){
-    delete this.todoItems[id];
+    this.todoItems = this.todoItems.filter((todoItem) => todoItem.indx != id);
+    
+    for(let i=0;i<this.todoItems.length;i++){
+        this.todoItems[i].indx = i;
+    }
+  }
+
+  /*
+  Methods related to login and signup
+  ....................................
+  */
+
+  addUser(usercred: UserCred){
+    
+    if(this.userCreds.has(usercred.userid)){
+      
+      return false;
+    }
+    
+    this.userCreds.set(usercred.userid, usercred);
+    
+    this.userId = usercred.userid;
+    localStorage.setItem("users", JSON.stringify([...this.userCreds]));
+    return true;
+  }
+
+  validUser(usercred: UserCred):boolean{
+    if(!this.userCreds.has(usercred.userid) || this.userCreds.get(usercred.userid)?.userpwd !== usercred.userpwd){
+      
+      return false;
+    }
+    
+    this.loggedIn = true;
+    this.userId = usercred.userid;
+    this.loadTodoItems();
+    
+    return true;
+  }
+
+  logout():void{
+    localStorage.setItem("users", JSON.stringify([...this.userCreds]));
+    let todos = localStorage.getItem("todos");
+    
+    let isPresent = false, i=0, todoitemsparsed = [];
+    if(todos){
+      todoitemsparsed = JSON.parse(todos);
+    }
+
+      for(;i<todoitemsparsed.length;i++){
+           if(todoitemsparsed[i][0] === this.userId){
+             isPresent = true;
+             todoitemsparsed[i][1] = this.todoItems;
+           }
+      }
+      if(!isPresent){
+        let data = [this.userId, this.todoItems];
+        todoitemsparsed.push(data);
+      }
+    localStorage.setItem("todos", JSON.stringify([...todoitemsparsed]));
+    this.loggedIn = false;
+    
+    this.router.navigate(["./todo/login"],{relativeTo: this.route});
   }
 }
 export class TodoItem{
@@ -34,5 +138,15 @@ export class TodoItem{
     this.name = name;
     this.description = description;
     this.time = time;
+  }
+}
+export class UserCred{
+  username!: string;
+  userid!:string;
+  userpwd!: string;
+  constructor(username: string, userid: string, userpwd: string){
+    this.userid = userid;
+    this.userpwd = userpwd;
+    this.username = username;
   }
 }

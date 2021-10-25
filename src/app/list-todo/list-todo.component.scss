@@ -7,37 +7,47 @@
 @mixin effect{
     color: whitesmoke
 }
-
+* {
+    box-sizing: border-box;
+  }
 .layout{
-    
     margin: 20px 0px 20px 20px;
     .button{
         float: left;
         clear: left;
-        
         padding: 10px 10px;
         @include transition();
         background-color: #296402;
     }
-    .button:hover{
+    .logoutButton{
+        //margin: -40px 40%;
+        float: right;
+        padding: 10px 10px;
+        @include transition();
+        background-color: #032c77;
+    }
+    .button:hover, .logoutButton:hover{
         cursor: pointer;
         @include effect();
         background-color: rgb(2, 63, 55);
     }
-    .todoItem{
-        //border: solid 2px rgb(132, 132, 172);
-        margin: 20px 0px 20px;
-        padding: 8px 8px;
-        
-        .viewbutton{
-            @include transition();
-            background-color: #055f94;
-           
-        }
-        .viewbutton:hover{
-            cursor: pointer;
-            @include effect();
-            background-color: #06517c;
+    .todoLayout{
+        text-align: center;
+        .todoItem{
+            border: solid 2px rgb(132, 132, 172);
+            margin: 20px 0px 20px;
+            padding: 8px;
+            .viewbutton{
+                @include transition();
+                background-color: #055f94;
+            }
+            .viewbutton:hover{
+                cursor: pointer;
+                @include effect();
+                background-color: #06517c;
+            }
         }
     }
 }
+
+
