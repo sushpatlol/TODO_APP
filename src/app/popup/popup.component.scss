@@ -1,36 +1,23 @@
-@mixin transition {
-    color: whitesmoke;
-    border: none;
-    border-radius: 4px;
-    transition-duration: 0.5s;
-}
-@mixin effect{
-    color: whitesmoke
-}
+
 .alert{
-    padding: 30px 30px;
-    border: 1px solid rgb(238, 209, 209);
-    border-radius: 2px;
-    //background-color: rgb(238, 209, 209);
-    background-color:#fff;
-    color: rgb(175, 9, 9);
+    padding: 40px 40px;
+    border: none;
+    background-color:rgb(10, 10, 10);
+    color: rgb(243, 242, 242);
+    border-radius: 5px;
     position: absolute;
-    //margin: 10%;
-    top: 20%;
-    left: 20%;
-    text-align: center;
-    .button{
-        padding: 10px 10px;
-        @include transition();
-        background-color: #022964;
-        margin: 0px 20px 0px 0px;
+    left: 50%;
+    top: 50%;
+    opacity: 0.7;
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    .closeIcon{
+        position: absolute;
+        top:10%;
+        right:10%;
     }
-    button[disabled]{
-        border: 1px solid #999999;
-        background-color: #cccccc;
-        color: #666666;
-    }
-    .button:hover{
+    .closeIcon:hover{
         cursor: pointer;
     }
 }

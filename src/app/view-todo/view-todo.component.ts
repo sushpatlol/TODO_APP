@@ -1,12 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgForm, ReactiveFormsModule, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { TodoItem, TodoService } from '../todo.service';
-
+import {faExclamationCircle} from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-view-todo',
   templateUrl: './view-todo.component.html',
-  styleUrls: ['./view-todo.component.scss', '../add-todo/add-todo.component.scss']
+  styleUrls: ['./view-todo.component.scss']
 })
 export class ViewTodoComponent implements OnInit {
   public todoItemId! : number;
@@ -16,7 +16,12 @@ export class ViewTodoComponent implements OnInit {
   public isUpdated = false;
   public updated = "Todo Item Updated!!";
   public deleted = "Todo Item Deleted!!";
-  constructor(private router: Router, private route: ActivatedRoute, private _formBuilder: FormBuilder,private _todoService: TodoService) { }
+  faExclamationCircle=faExclamationCircle;
+  showNameError:boolean;showDescError:boolean;
+  constructor(private router: Router, private route: ActivatedRoute, private _formBuilder: FormBuilder,private _todoService: TodoService) { 
+    this.showDescError = false;
+    this.showNameError = false;
+  }
 
   ngOnInit(): void {
    

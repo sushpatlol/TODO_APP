@@ -12,7 +12,6 @@ describe('PageNotFoundComponent', () => {
     })
     .compileComponents();
   });
-
   beforeEach(() => {
     fixture = TestBed.createComponent(PageNotFoundComponent);
     component = fixture.componentInstance;

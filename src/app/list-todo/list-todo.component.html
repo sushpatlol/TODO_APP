@@ -1,21 +1,43 @@
-<div class="layout" *ngIf="isLoggedIn()t">
-<div>
-    <div *ngIf="isEmpty()">
+<div class="outer">
+    <div class="logoutButton" (click)="logout()">
+        Log out 
+        <span><fa-icon [icon]="faSignOutAlt"></fa-icon></span>
+    </div>
+
+<div class="layout" *ngIf="isLoggedIn()">
+    
+
+    <div *ngIf="isEmpty()" class="todoLayout">
         <h2>No todo items</h2>
     </div>
-    <div>
-        <button type="button" class="logoutButton" (click)="logout()">Log out</button>
-    </div>
-</div>
-    <div *ngIf="!isEmpty()">     
-        <div *ngFor="let item of todoItems;" class="todoLayout" fxLayout="column">
-            <div *ngIf = "isPresent(item)"  fxLayout="row">
-                <div class="todoItem" fxFlex="20">
-                    {{item.name}}
-                    <button (click)="onSelect(item)" class="viewbutton">View</button>
+
+    <div *ngIf="!isEmpty()" class="todoLayout">     
+        <div *ngFor="let item of todoItems;" >
+            
+                <div class="todoItem">
+                    <div class="todoName">
+                        {{item.name}}
+                        <span class="viewicons">
+                            <fa-icon [icon]="faCheckCircle" (click)="onDelete(item)" class="viewicon"></fa-icon>
+                            <fa-icon [icon]="faPen" (click)="onSelect(item)" class="viewicon"></fa-icon>
+                        </span>
+                    </div>
+                    <div>
+                        {{item.description}}
+                    </div>
+                    <div class="todoTime">
+                        {{item.time | date: 'ccc MMM d, h:mm a'}}
+                    </div>
                 </div>
-            </div>
-        </div>
+           
+         </div>
     </div>
-    <button type="button" class="button" (click)="goToAddPage()">Add Todo Item</button>
+  
+    <div class="addButton">
+        <a (click)="goToAddPage()" >Add Todo Item</a>
+    </div>
+    
+
+
+</div>
 </div>

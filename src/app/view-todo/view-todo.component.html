@@ -1,27 +1,36 @@
-<div *ngIf="todoItem!=null">
-    <div class="item">
+<div *ngIf="todoItem!=null" class="item">
         <form [formGroup]="userForm" (ngSubmit)="updateTodoItem()">
             <div class="flexLayout">
-                <input type="text" placeholder="Name" class="todo-description" formControlName="todoName">
-                <div  *ngIf="userForm.controls['todoName'].hasError('required') && userForm.controls.todoName.dirty" class="alert">
-                    Please enter the name for the todo item
-                </div>
-                <div *ngIf="userForm.controls['todoName'].hasError('minlength')" class="alert">
-                    Please enter the name of more than 4 characters
-                </div>
-                <div *ngIf="userForm.controls['todoName'].hasError('maxlength')" class="alert">
-                    Please enter the name of less than 15 character
-                </div>
-                <textarea placeholder="Description" class="todo-description" rows="8" cols="50" formControlName="todoDescription"></textarea>
-                <div  *ngIf="userForm.controls['todoDescription'].hasError('required') && userForm.controls.todoDescription.dirty" class="alert">
-                    Please enter the description
-                </div>
-                <input type="datetime-local" class="todo-time" formControlName="todoTime">
-                <button type="submit" [disabled]="!(userForm.valid && isFormChanged())" class="button">Update item</button>
-                <button type="button" class="deleteButton" (click)="deleteTodoItem()">Delete item</button>
+                    <div class="textField" >
+                        <input type="text" placeholder="Name" formControlName="todoName">
+                        <div  *ngIf="userForm.controls['todoName'].hasError('required') && userForm.controls.todoName.dirty" class="alert">
+                            <span *ngIf="showNameError"><b>Please enter the name for the todo item</b></span><fa-icon [icon]="faExclamationCircle" (mouseover)="showNameError=true" (mouseout)="showNameError=false"></fa-icon>
+                        </div>
+                        <div *ngIf="userForm.controls['todoName'].hasError('minlength')" class="alert">
+                            <span *ngIf="showNameError"><b>Please enter the name of more than 4 characters</b></span><fa-icon [icon]="faExclamationCircle" (mouseover)="showNameError=true" (mouseout)="showNameError=false"></fa-icon>
+                        </div>
+                        <div *ngIf="userForm.controls['todoName'].hasError('maxlength')" class="alert">
+                            <span *ngIf="showNameError"><b>Please enter the name of less than 15 character</b></span><fa-icon [icon]="faExclamationCircle" (mouseover)="showNameError=true" (mouseout)="showNameError=false"></fa-icon>
+                        </div>
+                    </div>
+                    
+                    <div class="textField" >
+                        <textarea placeholder="Description" rows="8" cols="50" formControlName="todoDescription"></textarea>
+                        <div  *ngIf="userForm.controls['todoDescription'].hasError('required') && userForm.controls.todoDescription.dirty" class="alert">
+                            <span *ngIf="showDescError"><b>Please enter the description</b></span><fa-icon [icon]="faExclamationCircle" (mouseover)="showDescError=true" (mouseout)="showDescError=false"></fa-icon>
+                        </div>
+                    </div>
+                    <div class="todoField">
+                        <input type="datetime-local" class="todo-time" formControlName="todoTime">
+                    </div>
+                    <div class="todoField">
+                        <button type="submit" [disabled]="!(userForm.valid && isFormChanged()) || isUpdated || isDeleted">Update</button>
+                        <button type="button" (click)="deleteTodoItem()" [disabled]="isDeleted || isUpdated">Done</button>
+                    </div>  
+                
             </div>
         </form>
-    </div>
+  
 </div>
 <div *ngIf="isDeleted">
     <app-popup (childEvent)="navigateTolist()" [text]="deleted"></app-popup>

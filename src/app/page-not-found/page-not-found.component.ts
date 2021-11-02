@@ -8,7 +8,6 @@ import { Component, OnInit } from '@angular/core';
     </h2>
   `,
   styles: [
-    
   ]
 })
 export class PageNotFoundComponent implements OnInit {

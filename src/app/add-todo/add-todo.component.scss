@@ -5,80 +5,79 @@
     transition-duration: 0.5s;
 }
 @mixin effect{
-    background-color: rgb(3, 107, 148);
+    background-color: rgb(204, 103, 35);
     color: whitesmoke
 }
 .item{ 
-    input.ng-invalid, textarea.ng-invalid{
-        border-left: 5px solid red;
-    }
-    input.ng-valid, textarea.ng-valid{
-        border-left: 5px solid green;
-    }
-    .alert{
-        padding: 8px 8px;
-        border: 1px solid rgb(238, 209, 209);
-        border-radius: 2px;
-        background-color: rgb(238, 209, 209);
-        color: rgb(175, 9, 9);
-        float: left;
-        clear: left;
-        margin: -20px 0px 20px 20px;
-    }
-    .todo-description::placeholder{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    height: 100vh;
+    justify-content: center;
+    .input::placeholder{
         position: absolute;
         text-align: left;
         font-size: 20px;
         color: rgb(119, 99, 138);
     }
-    .todo-description{
-        font-size: 20px;
-        border-style:solid;
-        border-width: 2px;
-        border-color: rgb(113, 91, 173);
-        padding: 5px 5px;
+    input[type=text], textarea{
+        border: none;
+        padding: 15px 15px;
+        background-color: whitesmoke;
+        width: 100%;//-webkit-fill-available;
+        box-sizing: border-box;
+    }
+    input[type=text]:focus, textarea:focus{
+        background-color: #e2dddd;;
     }
     .todo-time{
         padding: 8px 8px;
         @include transition();
-        background-color: #008CBA;
+        background-color: #a75509;;
     }
-    .todo-time:hover{
-        @include effect();
-        cursor: pointer;
-    }
-    .todo-description, .todo-time, .button, .deleteButton{
-        float: left;
-        margin: 20px 0px 20px 20px;
-    }
-    .todo-description, .todo-time, .button{
-        clear: left;
-    }
-    .button, .deleteButton{
+    button{
         padding: 10px 10px;
         @include transition();
-        background-color: #296402;
+        background-color: #a75509;
+        margin-right: 10px;
     }
     button[disabled]{
-        border: 1px solid #999999;
         background-color: #cccccc;
         color: #666666;
     }
-    .button:hover{
+    button[disabled]:hover{
+        background-color: #cccccc;
+        color: #666666;
+    }
+    button:hover, .todo-time:hover{
         cursor: pointer;
+        @include effect(); 
     }
     .flexLayout{
         display: flex;
-        flex-wrap: wrap;
+        flex-flow: column nowrap;
+        border: solid 1px rgb(153, 149, 149);
+        padding: 15px 15px 15px 15px;
+        .textField{
+            position: relative;
+            margin: 10px 0px 10px 0px;
+        }
         .alert{
-            flex: 50%;
-            margin: 20px;
+            position: absolute;
+            right: 2%;
+            top: 5px;
+            color:rgb(230, 14, 14);
+            border: none;
         }
-        .textarea{
-            flex: 80%;
+        .todoField{
+            margin: 10px 0px 10px 0px;
         }
-        .todo-time{
-            flex: 30%;
+        .cardLayout{
+            display: flex;
+            flex-flow: column;
+            padding: 15px 15px 15px 15px;
         }
+
     }
+
 }

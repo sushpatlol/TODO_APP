@@ -7,52 +7,67 @@
 @mixin effect{
     color: whitesmoke
 }
-.formLayout{
+
+.layout{
+    //background-color: rgb(145, 214, 191);
     display: flex;
-    flex-wrap: wrap;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient(to bottom, #bca1c4 0%, rgb(190, 204, 171) 100%);
+    align-items: center;
+}
+.formLayout{
+    padding: 10px 10px 10px 10px;
+    background-color: white;
+    display: flex;
+    
+    align-items: center;
+    flex-flow: column nowrap;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+
     .formDiv{
-        flex:100%;
-        .formInput{
-            font-size: 20px;
-            border-style:solid;
-            border-width: 2px;
-            border-color: rgb(113, 91, 173);
-            padding: 5px 5px;
-            margin: 0px 20px 20px 0px;
-        }
-        .formLabel{
-            flex: 100%;
-        }
-        .alert{
-            padding: 8px 8px;
-            border: 1px solid rgb(238, 209, 209);
-            border-radius: 2px;
-            background-color: rgb(238, 209, 209);
-            color: rgb(175, 9, 9);
-            flex:40%;
-            margin: 0px 70% 20px 0px;
-        }
-        input.ng-invalid{
-            border-left: 5px solid red;
-        }
-        input.ng-valid{
-            border-left: 5px solid green;
-        }
+        min-width: 320px;
+        padding: 10px 10px 10px 10px;
     }
-    .button{
+    input[type=text],input[type=email], input[type=password]{
+        font-size: 15px;
+        padding: 15px 15px;
+        width: -webkit-fill-available;
+        background-color: whitesmoke;
+        border: none;
+        margin: 10px 0px 10px 0px;
+    }
+    label{
+        font-size: 20px;
+    }
+    input[type=text]:focus,input[type=email]:focus, input[type=password]:focus{
+        background-color: #e2dddd;
+    }
+    .textField{
+        position: relative;
+        display: flex;
+    }
+    .alert{
+        position: absolute;
+        right:5%;
+        top: 35%;
+        border: none;
+        color: rgb(175, 9, 9);
+    }
+    button{ 
         padding: 10px 10px;
-        float:left;
-        clear: left;
         @include transition();
-        background-color: #296402;
-        margin: 0px 20px 0px 0px;
+        background-color: #a75509;//#296402;
+        font-size: 15px;
     }
     button[disabled]{
         border: 1px solid #999999;
         background-color: #cccccc;
         color: #666666;
     }
-    .button:hover{
+    button:hover{
         cursor: pointer;
+        @include effect();
+        background-color: rgb(204, 103, 35);
     }
 }

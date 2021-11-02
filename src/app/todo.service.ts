@@ -53,7 +53,7 @@ export class TodoService {
   addTodoItem(todoItem: TodoItem){
     todoItem.indx = this.todoItems.length==0?0:this.todoItems[this.todoItems.length-1].indx+1;
     this.todoItems?.push(todoItem);
-    
+    this.updateTodosLocalStorage();
   }
   getTodoItems(){
     return this.todoItems;
@@ -63,6 +63,7 @@ export class TodoService {
   }
   updateTodoItem(item: TodoItem){
     this.todoItems[item.indx] = item;
+    this.updateTodosLocalStorage();
   }
   deleteTodoItem(id: number){
     this.todoItems = this.todoItems.filter((todoItem) => todoItem.indx != id);
@@ -70,6 +71,7 @@ export class TodoService {
     for(let i=0;i<this.todoItems.length;i++){
         this.todoItems[i].indx = i;
     }
+    this.updateTodosLocalStorage();
   }
 
   /*
@@ -77,18 +79,13 @@ export class TodoService {
   ....................................
   */
 
+  isUserPresent(usercred: UserCred){
+    return this.userCreds.has(usercred.userid);
+  }
   addUser(usercred: UserCred){
-    
-    if(this.userCreds.has(usercred.userid)){
-      
-      return false;
-    }
-    
     this.userCreds.set(usercred.userid, usercred);
-    
     this.userId = usercred.userid;
     localStorage.setItem("users", JSON.stringify([...this.userCreds]));
-    return true;
   }
 
   validUser(usercred: UserCred):number{
@@ -103,9 +100,7 @@ export class TodoService {
     
     return 2;
   }
-
-  logout():void{
-    localStorage.setItem("users", JSON.stringify([...this.userCreds]));
+  updateTodosLocalStorage(){
     let todos = localStorage.getItem("todos");
     
     let isPresent = false, i=0, todoitemsparsed = [];
@@ -113,20 +108,22 @@ export class TodoService {
       todoitemsparsed = JSON.parse(todos);
     }
 
-      for(;i<todoitemsparsed.length;i++){
-           if(todoitemsparsed[i][0] === this.userId){
-             isPresent = true;
-             todoitemsparsed[i][1] = this.todoItems;
-           }
-      }
-      if(!isPresent){
-        let data = [this.userId, this.todoItems];
-        todoitemsparsed.push(data);
-      }
+    for(;i<todoitemsparsed.length;i++){
+          if(todoitemsparsed[i][0] === this.userId){
+            isPresent = true;
+            todoitemsparsed[i][1] = this.todoItems;
+          }
+    }
+    if(!isPresent){
+      let data = [this.userId, this.todoItems];
+      todoitemsparsed.push(data);
+    }
     localStorage.setItem("todos", JSON.stringify([...todoitemsparsed]));
+  }
+
+  logout():void{
     this.loggedIn = false;
-    
-    this.router.navigate(["./todo/login"],{relativeTo: this.route});
+    this.router.navigate(["../login"],{relativeTo: this.route});
   }
 }
 export class TodoItem{

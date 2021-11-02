@@ -1,31 +1,44 @@
-<div >
+<div class="layout">
+
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <div class="formLayout">
-            <div class="formDiv">
-                <div class="formLabel">
-                    <label>Username:</label>
-                </div>
+            <img src="../../assets/img/todologo.png" alt="todo logo" width=50 height=50>
             
-                    <input type="text" formControlName="userid" class="formInput" >
-                
-                
-                <div *ngIf="loginForm.controls['userid'].hasError('required') && loginForm.controls.userid.dirty" class="alert">
-                    Please enter the userid
+            <h2>Log In</h2>
+            <div class="formDiv">
+                <label for="userid"><b>Username</b></label>
+                <div class="textField">
+                    <input type="email" formControlName="userid" [email]="true">
+                    
+                    <div *ngIf="loginForm.controls['userid'].hasError('required') && loginForm.controls.userid.dirty" class="alert">
+                        <span *ngIf="showEmailError"><b>Please enter the Email</b></span>
+                        <span (mouseover)="showEmailError=true" (mouseout)="showEmailError=false"><fa-icon [icon]="faExclamationCircle"></fa-icon></span>
+                    </div>
+                    <div *ngIf="loginForm.controls['userid'].hasError('email') && loginForm.controls.userid.dirty" class="alert">
+                        <span *ngIf="showEmailError"><b>Please enter valid Email</b></span>
+                        <span (mouseover)="showEmailError=true" (mouseout)="showEmailError=false"><fa-icon [icon]="faExclamationCircle"></fa-icon></span>
+                    </div>
                 </div>
+
             </div>
             <div class="formDiv">
-                <div class="formLabel">
-                    <label>Password:</label>
-                </div>
+               
+                <label for="userpwd"><b>Password</b></label>
+                <div class="textField">
+                    <input type="password" formControlName="userpwd">
                 
-                    <input type="password" formControlName="userpwd" class="formInput">
-             
-                <div *ngIf="loginForm.controls['userpwd'].hasError('required') && loginForm.controls.userpwd.dirty" class="alert">
-                    Please enter the user password
+                    <div *ngIf="loginForm.controls['userpwd'].hasError('required') && loginForm.controls.userpwd.dirty" class="alert">
+                        <span *ngIf="showPwdError"><b>Please enter the user password</b></span>
+                        <span><fa-icon [icon]="faExclamationCircle" (mouseover)="showPwdError=true" (mouseout)="showPwdError=false"></fa-icon></span>
+                    </div>
                 </div>
+
             </div>
-            <button type="submit" class="button" [disabled]="!loginForm.valid">Login</button>
-            <button type="button" class="button" (click)="signUp()">Sign Up</button>
+            <div class="buttonDiv">
+                <button type="submit" [disabled]="!loginForm.valid || wrongPwd || wrongUsr" (mouseenter)="toggleShowBan" (mouseleave)="showBan=false">Login</button>
+                <span *ngIf="showBan"><fa-icon [icon]="faBan"></fa-icon></span>
+                <button type="button" [disabled]="wrongPwd || wrongUsr" (click)="signUp()">Sign Up</button>
+            </div>
         </div>
     </form>
 </div>

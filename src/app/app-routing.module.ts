@@ -8,10 +8,10 @@ import { SignupComponent } from './signup/signup.component';
 import { ViewTodoComponent } from './view-todo/view-todo.component';
 
 const routes: Routes = [
-  {path: '', redirectTo: '/todo/login', pathMatch: 'full'},
+  {path: '', redirectTo: '/login', pathMatch: 'full'},
   //{path: '', redirectTo: '/todo', pathMatch: 'full'},
-  {path: 'todo/login', component: LoginComponent},
-  {path:'todo/signup', component: SignupComponent},
+  {path: 'login', component: LoginComponent},
+  {path:'signup', component: SignupComponent},
   {path: 'todo', component: ListTodoComponent},
   {path: 'todo/addItem', component: AddTodoComponent},
   {path: 'todo/:id', component: ViewTodoComponent},

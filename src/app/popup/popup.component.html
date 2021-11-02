@@ -1,4 +1,6 @@
 <div class="alert">
     {{text}}
-    <button type="button" (click)="closePopUp()" class="button">OK</button>
+    <span class="closeIcon"><fa-icon [icon]="faTimes" (click)="closePopUp()"></fa-icon></span>
+    <!--<button type="button" (click)="closePopUp()" class="button">OK</button>-->
 </div>
+

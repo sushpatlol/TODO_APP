@@ -1,25 +1,36 @@
 <div class="item" *ngIf="isLoggedIn()">
     <form [formGroup]="userForm" (ngSubmit)="onSubmit()" novalidate>
         <div class="flexLayout">
-        <input type="text" placeholder="Name" class="todo-description" formControlName="todoName" #refName>
-        <div  *ngIf="userForm.controls['todoName'].hasError('required') && userForm.controls.todoName.dirty" class="alert">
-            Please enter the name for the todo item
-        </div>
-        <div *ngIf="userForm.controls['todoName'].hasError('minlength')" class="alert">
-            Please enter the name of more than 4 characters
-        </div>
-        <div *ngIf="userForm.controls['todoName'].hasError('maxlength')" class="alert">
-            Please enter the name of less than 15 character
-        </div>
-        <textarea placeholder="Description" class="todo-description" rows="8" cols="50" formControlName="todoDescription"></textarea>
-        <div  *ngIf="userForm.controls['todoDescription'].hasError('required') && userForm.controls.todoDescription.dirty" class="alert">
-            Please enter the description
-        </div>
-        <input type="datetime-local" class="todo-time" formControlName="todoTime">
-        <div  *ngIf="userForm.controls['todoTime'].hasError('required') && userForm.controls.todoTime.touched" class="alert">
-            Please select the date and time
-        </div>
-        <button [disabled]="!userForm.valid" type="submit" class="button">Add item</button>
+            <div>
+                <div class="textField">
+                    <input type="text" placeholder="Name" formControlName="todoName" #refName>
+                    <div  *ngIf="userForm.controls['todoName'].hasError('required') && userForm.controls.todoName.dirty" class="alert">
+                        <span *ngIf="showNameError"><b>Please enter the name for the todo item</b></span><fa-icon [icon]="faExclamationCircle" (mouseover)="showNameError=true" (mouseout)="showNameError=false"></fa-icon>
+                    </div>
+                    <div *ngIf="userForm.controls['todoName'].hasError('minlength')" class="alert">
+                        <span *ngIf="showNameError"><b>Please enter the name of more than 4 characters</b></span><fa-icon [icon]="faExclamationCircle" (mouseover)="showNameError=true" (mouseout)="showNameError=false"></fa-icon>
+                    </div>
+                    <div *ngIf="userForm.controls['todoName'].hasError('maxlength')" class="alert">
+                        <span *ngIf="showNameError"><b>Please enter the name of less than 15 character</b></span><fa-icon [icon]="faExclamationCircle" (mouseover)="showNameError=true" (mouseout)="showNameError=false"></fa-icon>
+                    </div>
+                </div>
+                <div class="textField">
+                    <textarea placeholder="Description" rows="8" cols="50" formControlName="todoDescription"></textarea>
+                    <div  *ngIf="userForm.controls['todoDescription'].hasError('required') && userForm.controls.todoDescription.dirty" class="alert">
+                        <span *ngIf="showDescError"><b>Please enter the description</b></span><fa-icon [icon]="faExclamationCircle" (mouseover)="showDescError=true" (mouseout)="showDescError=false"></fa-icon>
+                    </div>
+                </div>
+                <div class="textField">
+                    <input type="datetime-local" class="todo-time" formControlName="todoTime">
+                    <div  *ngIf="userForm.controls['todoTime'].hasError('required') && userForm.controls.todoTime.touched" class="alert">
+                        <span *ngIf="showTimeError">Please select the date and time</span>
+                        <fa-icon [icon]="faExclamationCircle" (mouseover)="showTimeError=true" (mouseout)="showTimeError=false"></fa-icon>
+                    </div>
+                </div>
+                <div class="todoField">
+                    <button [disabled]="!userForm.valid || isAdded" type="submit" class="button">Add item</button>
+                </div> 
+            </div>
         </div>
     </form>
 </div>

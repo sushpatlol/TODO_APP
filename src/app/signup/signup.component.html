@@ -1,37 +1,55 @@
-<div *ngIf="!signInSuccess">
+<div *ngIf="!signInSuccess" class="layout">
     <form [formGroup]= "userForm" (ngSubmit)="onSubmit()">
-       
         <div class="formLayout">
-            <div class="formDiv">
-                <div class="formLabel">
-                    <label >Name</label>
+            <img src="../../assets/img/todologo.png" alt="todo logo" width=50 height=50>
+            <h1>Sign Up</h1>
+            <div class="userForm">
+                <div class="formDiv">
+                    <label for="username"><b>Name</b></label>
+                    <div class="textField">
+                        <input type="text" formControlName="username">
+                        <div *ngIf="userForm.controls['username'].hasError('required') && userForm.controls.username.dirty" class="alert">
+                            <span *ngIf="showNameError"><b>Please enter the name</b></span>
+                            <span (mouseover)="showNameError=true" (mouseout)="showNameError=false"><fa-icon [icon]="faExclamationCircle"></fa-icon></span>
+                        </div>
+                    </div>
                 </div>
-                
-                <input type="text" formControlName="username" class="formInput">
-                <div *ngIf="userForm.controls['username'].hasError('required') && userForm.controls.username.dirty" class="alert">
-                    Please enter the name
+                <div class="formDiv">
+                    <label for="userid"><b>Email Address</b></label>
+                    <div class="textField">
+                        <input type="email" formControlName="userid" [email]="true">
+                        <span *ngIf="userForm.controls['userid'].hasError('required') && userForm.controls.userid.dirty" class="alert">
+                            <span *ngIf="showEmailError"><b>Please enter the email</b></span>
+                            <span (mouseover)="showEmailError=true" (mouseout)="showEmailError=false"><fa-icon [icon]="faExclamationCircle"></fa-icon></span>
+                        </span>
+                        <span *ngIf="userForm.controls['userid'].hasError('email') && userForm.controls.userid.dirty" class="alert">
+                            <span *ngIf="showEmailError"><b>Please enter valid email</b></span>
+                            <span (mouseover)="showEmailError=true" (mouseout)="showEmailError=false"><fa-icon [icon]="faExclamationCircle"></fa-icon></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="formDiv">
+                    <label for="userpwd"><b>Password</b></label>
+                    <div class="textField">
+                        <input type="password" formControlName="userpwd">
+                        <span *ngIf="userForm.controls['userpwd'].hasError('required') && userForm.controls.userpwd.dirty" class="alert">
+                            <span *ngIf="showPwdError"><b>Please set the password</b></span>
+                            <span (mouseover)="showPwdError=true" (mouseout)="showPwdError=false"><fa-icon [icon]="faExclamationCircle"></fa-icon></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="formDiv">
+                    <label for="userpwd"><b>Repeat password</b></label>
+                    <div class="textField">
+                        <input type="password" formControlName="ruserpwd">
+                        <div *ngIf="userForm.controls['ruserpwd'].hasError('required') && userForm.controls.ruserpwd.dirty" class="alert">
+                            <span *ngIf="showRpwdError"><b>Please re-enter the password</b></span>
+                            <span (mouseover)="showRpwdError=true" (mouseout)="showRpwdError=false"><fa-icon [icon]="faExclamationCircle"></fa-icon></span>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="formDiv">
-                <div class="formLabel">
-                    <label >Username</label>
-                </div>
-                
-                <input type="text" formControlName="userid" class="formInput">
-                <div *ngIf="userForm.controls['userid'].hasError('required') && userForm.controls.userid.dirty" class="alert">
-                    Please enter the userid
-                </div>
-            </div>
-            <div class="formDiv">
-                <div class="formLabel">
-                    <label >Password</label>
-                </div>
-                <input type="password" formControlName="userpwd" class="formInput">
-                <div *ngIf="userForm.controls['userpwd'].hasError('required') && userForm.controls.userpwd.dirty" class="alert">
-                    Please set the password
-                </div>
-            </div>
-            <button type="submit" class="button" [disabled]="!userForm.valid">Sign up</button>
+            <button type="submit" [disabled]="!userForm.valid">Sign up</button> 
         </div>
     </form>
 </div>
@@ -42,4 +60,9 @@
 <div *ngIf="signInSuccess">
     <app-popup (childEvent)="navigateToLogin()" [text]="signUpSuccess"></app-popup>
 </div>
+
+<div *ngIf="pwdmismatch">
+    <app-popup (childEvent)="navigateToSelf()" [text]="pwdMismatch"></app-popup>
+</div>
+
 
